@@ -1,0 +1,116 @@
+#include <stdio.h>
+#include <locale.h>
+#include <string.h>
+
+
+void validaCPF (char * CPF)
+{
+    int aux [20] ;
+    int i = 0;
+    int cont = 0; 
+    int digito;
+    int soma = 0;
+    int j = 10;
+    int x = 0;
+    int resto;
+    char valido1 = 0;
+    
+    
+    printf("Validando CPF\n");
+    for (i = 0; i < 20; i++) 
+    {
+        digito = CPF[i] - '0'; 
+        printf("Digito = %i\n",digito); // verificando cada um dos digitos se é somente número
+        
+        if (digito >=  0 && digito <= 9 ){
+             printf("Digito[%i] = %d\n", i,digito);  
+            aux[x++] = digito; 
+            cont++;
+            if (cont >= 11)
+            {
+                break;
+            }
+        }
+    }
+    
+    for (x = 0; x < 9; x++)
+    {
+        soma = soma + aux[x] * j; 
+        
+        printf("soma:%d, aux[%d]:%d, j:%d\n", soma, x,aux[x], j--);
+    }
+    
+    resto = soma % 11;
+    
+    if (cont == 11){
+        
+        if ((resto <= 1)&&(aux[9] == 0) ||((resto >= 2)&& (aux[9] == (11 - resto)))){
+            
+            valido1 = 1;
+            
+            printf("CPF válido!\n");
+        }   
+        else{
+        printf("CPF inválido\n");
+    }
+    }
+    
+    else{
+        printf("CPF inválido\n");
+    }
+   
+
+}
+
+
+int main()
+{
+    setlocale(LC_ALL, "pt_br.utf-8");
+    
+    int num;
+    int RG = 0;
+    char CPF [20] = {'0'}; 
+    char aux [1] = {'0'};
+    char dataNasc[10];
+    
+    while(num != 4){
+    
+        printf("Digite uma opção\n1- Para digitar CPF\n2- Para digitar RG\n3- Para digitar data de nascimento\n4- Finalizar\n");
+        scanf("%d", &num);
+    
+        switch(num){
+            case 1:
+    
+            printf("Digite seu CPF:\n");
+            scanf("%s", &CPF);
+               validaCPF (CPF);
+        
+            break;
+        
+            case 2:
+        
+            printf("Digite o RG:\n"); 
+            scanf("%d", &RG);
+        
+            break; 
+        
+            case 3:
+        
+            printf("Digite sua data de nascimento:\n");
+            scanf("%s", &dataNasc);
+        
+            break;
+        
+            default:
+        
+            printf("Opção inválida\n");
+        
+            break;
+            
+            case 4: printf("Finalizando programa . . . . !\n");
+        }
+    }
+    
+    
+    return 0;
+}
